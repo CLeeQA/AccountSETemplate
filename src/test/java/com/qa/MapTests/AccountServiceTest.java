@@ -8,31 +8,67 @@ import org.junit.Test;
 
 import com.qa.persistence.domain.Account;
 import com.qa.persistence.repository.AccountMapRepository;
+import com.qa.util.JSONUtil;
 
 public class AccountServiceTest {
 
+	JSONUtil jsonUtil;
+	
+	AccountMapRepository myRepo;
+	
 	@Before
 	public void setup() {
-	
+		
+		myRepo = new AccountMapRepository();
+		jsonUtil = new JSONUtil();
+		
 	}
 	
 	@Test
 	public void addAccountTest() {
+		
+		myRepo.createAccount(jsonUtil.getJSONForObject(new Account("John", "Smith", 1)));
+		
+		Account[] accounts = jsonUtil.getObjectForJSON(myRepo.getAllAccounts(), Account[].class);
+		
+		assertEquals("John", accounts[0].getFirstName());
 		
 	}
 	
 	@Test
 	public void add2AccountTest() {
 		
+		myRepo.createAccount(jsonUtil.getJSONForObject(new Account("John", "Smith", 1)));
+		myRepo.createAccount(jsonUtil.getJSONForObject(new Account("Sam", "Davis", 2)));
+		
+		Account[] accounts = jsonUtil.getObjectForJSON(myRepo.getAllAccounts(), Account[].class);
+		
+		assertEquals("John", accounts[0].getFirstName());
+		assertEquals("Sam", accounts[1].getFirstName());
+		
 	}
 
 	@Test
 	public void removeAccountTest() {
+
+		myRepo.createAccount(jsonUtil.getJSONForObject(new Account("John", "Smith", 1)));
+
+		myRepo.deleteAccount((long) 1);
+		
+		assertEquals(0, myRepo.getAccountMap().size());
 		
 	}
 	
 	@Test
 	public void remove2AccountTest() {
+
+		myRepo.createAccount(jsonUtil.getJSONForObject(new Account("John", "Smith", 1)));
+		myRepo.createAccount(jsonUtil.getJSONForObject(new Account("Sam", "Davis", 2)));
+
+		myRepo.deleteAccount((long) 1);
+		myRepo.deleteAccount((long) 2);
+		
+		assertEquals(0, myRepo.getAccountMap().size());
 		
 	}
 	
