@@ -53,9 +53,7 @@ public class AccountServiceTest {
 
 		myRepo.createAccount(jsonUtil.getJSONForObject(new Account("John", "Smith", 1)));
 
-		myRepo.deleteAccount((long) 1);
-		
-		assertEquals(0, myRepo.getAccountMap().size());
+		assertEquals("Remove successful!", myRepo.deleteAccount((long) 1));
 		
 	}
 	
@@ -65,15 +63,18 @@ public class AccountServiceTest {
 		myRepo.createAccount(jsonUtil.getJSONForObject(new Account("John", "Smith", 1)));
 		myRepo.createAccount(jsonUtil.getJSONForObject(new Account("Sam", "Davis", 2)));
 
-		myRepo.deleteAccount((long) 1);
-		myRepo.deleteAccount((long) 2);
-		
-		assertEquals(0, myRepo.getAccountMap().size());
+		assertEquals("Remove successful!", myRepo.deleteAccount((long) 1));
+		assertEquals("Remove successful!", myRepo.deleteAccount((long) 2));
 		
 	}
 	
 	@Test
 	public void remove2AccountTestAnd1ThatDoesntExist() {
+
+		myRepo.createAccount(jsonUtil.getJSONForObject(new Account("John", "Smith", 1)));
+
+		assertEquals("Remove successful!", myRepo.deleteAccount((long) 1));
+		assertEquals("Remove unsuccessful!", myRepo.deleteAccount((long) 2));
 		
 	}
 	

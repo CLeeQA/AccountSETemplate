@@ -38,11 +38,18 @@ public class AccountMapRepository implements AccountRepository{
 
 	public String deleteAccount(Long id) {
 
-		accountMap.remove(id);
-		
-		return null;
-		
+		if (accountMap.containsKey(id)) {
+			accountMap.remove(id);
+			
+			return "Remove successful!";
+			
+		} else {
+			
+			return "Remove unsuccessful!";
+			
+		}
 	}
+			
 
 	public String updateAccount(Long id, String account) {
 
