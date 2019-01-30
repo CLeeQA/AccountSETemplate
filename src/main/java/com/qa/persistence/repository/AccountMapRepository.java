@@ -59,5 +59,24 @@ public class AccountMapRepository implements AccountRepository{
 		
 		return null;
 	}
+
+	public int findName(String fName) {
+
+		int count = 0;
+		
+		for (Account a : accountMap.values()) {
+			
+			if  (a.getFirstName().equals(fName)) {
+
+				count++;
+				
+			}
+			
+		}
+		
+		System.out.println("There are " + count + " people called " + fName);
+		
+		return count;
+	}
  
 }
